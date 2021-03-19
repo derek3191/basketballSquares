@@ -1,32 +1,33 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet as DefaultStyleSheet, View as DefaultView } from 'react-native';
 import { Text } from 'react-native-elements';
 
 export default function GameDetail(props){
     return(
-        <View>
+        <DefaultView>
             {props.gameInfo !== undefined && 
                 <>
-                    <View style={{flexDirection: 'row'}}>
-                        <View testID="away">
-                            <Text h4 testID="name">{props.gameInfo.away.names.full}</Text>
+                    <Text>{props.gameInfo.championship.bracketRound}</Text>
+                    <DefaultView style={{flexDirection: 'row'}}>
+                        <DefaultView testID="away">
+                            <Text h4 testID="name">{props.gameInfo.away.names.short}</Text>
                             <Text testID="record">{props.gameInfo.away.record}</Text>
                             <Text testID="score">{props.gameInfo.away.score}</Text>
-                        </View>
+                        </DefaultView>
                         <Text h4 >@</Text>
-                        <View testID="home">
-                            <Text h4 testID="name">{props.gameInfo.home.names.full}</Text>
+                        <DefaultView testID="home">
+                            <Text h4 testID="name">{props.gameInfo.home.names.short}</Text>
                             <Text testID="record">{props.gameInfo.home.record}</Text>
                             <Text testID="score">{props.gameInfo.home.score}</Text>
-                        </View>
-                    </View>
+                        </DefaultView>
+                    </DefaultView>
                 </>
             }
-        </View>
+        </DefaultView>
     )
 }
 
-const styles = StyleSheet.create({
+const styles = DefaultStyleSheet.create({
   awayTitle: {
       flex: 1
   },
