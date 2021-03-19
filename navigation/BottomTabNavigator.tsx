@@ -48,7 +48,7 @@ function ScoreboardNavigator() {
       <ScoreboardStack.Screen
         name="ScoreboardScreen"
         component={ScoreboardScreen}
-        options={{ headerTitle: 'ScoreboardScreen Title' }}
+        options={{ headerTitle: 'Scores' }}
       />
     </ScoreboardStack.Navigator>
   );
@@ -62,7 +62,8 @@ function SquaresNavigator() {
       <SquaresStack.Screen
         name="SquaresScreen"
         component={SquaresScreen}
-        options={{ headerTitle: 'SquaresScreen Title' }}
+        // options={{ headerShown: false }}
+        options={{ headerTitle: 'Squares' }}
       />
     </SquaresStack.Navigator>
   );

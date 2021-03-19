@@ -8,12 +8,12 @@ export default {
         screens: {
           Scoreboard: {
             screens: {
-              ScoreboardScreen: 'one',
+              ScoreboardScreen: 'scoreboard',
             },
           },
           Squares: {
             screens: {
-              SquaresScreen: 'two',
+              SquaresScreen: 'squares',
             },
           },
         },

@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 
-import { Text, View, StyleSheet, ScrollView } from 'react-native';
+import { Button, Text, View, StyleSheet, ScrollView } from 'react-native';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 import Schedule from '../components/Schedule.tsx';
 
@@ -12,6 +13,12 @@ export default function ScoreboardScreen() {
   const [gameDetail, setGameDetail] = useState(null);
   const [date, setDate] = useState(new Date(Date.now()));
   const [schedule, setSchedule] = useState(null);
+
+  const onChange = (event, selectedDate) => {
+    const currentDate = selectedDate || date;
+    setDate(currentDate);
+    setSchedule(null);
+  };
 
   useEffect(() => {
     async function getGameInfo(id){
@@ -47,6 +54,16 @@ export default function ScoreboardScreen() {
 
     return (
         <View>
+          <View>
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={date}
+                mode="date"
+                is24Hour={true}
+                display="default"
+                onChange={onChange}
+              />
+          </View>
           <ScrollView>
             {schedule && <Schedule games={schedule} />}
           </ScrollView>
