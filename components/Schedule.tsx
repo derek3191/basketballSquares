@@ -21,6 +21,9 @@ export default function GameSummary(props){
                         <Text>{v.game.startTime}</Text>
                         <Text> on {v.game.network}</Text>
                     </DefaultView>
+                    <DefaultView>
+                      <Text>{v.game.currentPeriod}</Text>
+                    </DefaultView>
                     <DefaultView style={{flexDirection: 'row'}}>
                         <DefaultView>
                             <Text>{v.game.away.description}</Text>
