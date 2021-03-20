@@ -6,6 +6,7 @@ export type RootStackParamList = {
 export type BottomTabParamList = {
   Scoreboard: undefined;
   Squares: undefined;
+  GameDetail: undefined;
 };
 
 export type ScoreboardParamList = {

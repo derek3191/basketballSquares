@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet as DefaultStyleSheet, View as DefaultView } from 'react-native';
 import { Text } from 'react-native-elements';
 
-export default function GameDetail(props){
+export default function GameDetail(props: Props){
     return(
         <DefaultView>
             {props.gameInfo !== undefined && 

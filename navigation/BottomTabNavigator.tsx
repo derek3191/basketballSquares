@@ -7,6 +7,7 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ScoreboardScreen from '../screens/ScoreboardScreen';
 import SquaresScreen from '../screens/SquaresScreen';
+import GameDetailScreen from '../screens/GameDetailScreen';
 import { BottomTabParamList, ScoreboardParamList, SquaresParamList } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
@@ -32,6 +33,13 @@ export default function BottomTabNavigator() {
           tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
         }}
       />
+      {/* <BottomTab.Screen
+        name="GameDetail"
+        component={GameDetailScreen}
+        options={{
+          tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+        }}
+      /> */}
     </BottomTab.Navigator>
   );
 }
@@ -63,7 +71,7 @@ function SquaresNavigator() {
         name="SquaresScreen"
         component={SquaresScreen}
         // options={{ headerShown: false }}
-        options={{ headerTitle: 'Squares' }}
+        options={{ headerTitle: 'Squaresss' }}
       />
     </SquaresStack.Navigator>
   );

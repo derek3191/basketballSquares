@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 
-import { Button, Text, View, StyleSheet, ScrollView } from 'react-native';
+import { AsyncStorage, Text, View, StyleSheet, ScrollView } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 import Schedule from '../components/Schedule.tsx';
@@ -14,18 +14,30 @@ export default function ScoreboardScreen() {
   const [date, setDate] = useState(new Date(Date.now()));
   const [schedule, setSchedule] = useState(null);
 
-  const onChange = (event, selectedDate) => {
+  function onChange(event: any, selectedDate: any): void {
     const currentDate = selectedDate || date;
     setDate(currentDate);
     setSchedule(null);
   };
 
+  function formatDateString(d: date) : string {
+  var year = d.getFullYear();
+
+  var month = (1 + d.getMonth()).toString();
+  month = month.length > 1 ? month : '0' + month;
+
+  var day = d.getDate().toString();
+  day = day.length > 1 ? day : '0' + day;
+  
+  return year + '/' + month + '/' + day  ;
+}
+
   useEffect(() => {
-    async function getGameInfo(id){
+    async function getGameInfo(id: string): any{
       return gameSvc.getGameInfo(id);
     }
 
-    async function getScheduleForDate(d){
+    async function getScheduleForDate(d: date): any {
       return gameSvc.getScheduleForDate(formatDateString(d));
     }
 
@@ -72,17 +84,7 @@ export default function ScoreboardScreen() {
 }
 
 
-function formatDateString(d) {
-  var year = d.getFullYear();
 
-  var month = (1 + d.getMonth()).toString();
-  month = month.length > 1 ? month : '0' + month;
-
-  var day = d.getDate().toString();
-  day = day.length > 1 ? day : '0' + day;
-  
-  return year + '/' + month + '/' + day  ;
-}
 
 
 const styles = StyleSheet.create({

@@ -11,6 +11,11 @@ export default {
               ScoreboardScreen: 'scoreboard',
             },
           },
+          GameDetail: {
+            screens: {
+              GameDetailScreen: 'gameDetail',
+            },
+          },
           Squares: {
             screens: {
               SquaresScreen: 'squares',
