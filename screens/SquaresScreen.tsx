@@ -8,7 +8,7 @@ import { Board } from '../types/Board';
 
 
 export default function SquaresScreen() {
-    const [board, setBoard] = useState<Cell[] | null>(null);
+    const [board, setBoard] = useState<Board | undefined | null>(null);
     const [buttonIndex, setButtonIndex] = useState<number>(0);
     const buttons = ['Board 1', 'Board 2'];
     
@@ -33,12 +33,9 @@ export default function SquaresScreen() {
         return winner;
     }
 
-    function getBoard(boardId: string | null) : Board {
-        if (boardId) {
-            let board = data.boards.find(x => x.boardId === boardId);
-            return board;
-        }
-        return data.boards[0];
+    function getBoard(boardId: string = 'Board 1' ) : Board | undefined {
+        let board = data.boards.find(x => x.boardId === boardId);
+        return board;
     }
 
     useEffect(() => {

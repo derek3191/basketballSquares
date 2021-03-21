@@ -6,10 +6,9 @@ import { useNavigation } from '@react-navigation/native';
 import GameService from '../services/gameService';
 
 import data from '../constants/HardData.json';
-import { Game } from '../types/Game';
+import { Game, Team } from '../types/Game';
+import { Board } from '../types/Board';
 import { Schedule } from '../types/Schedule';
-// import SquaresScreen from '../screens/SquaresScreen';
-// import LinkingConfiguration from '../navigation/LinkingConfiguration';
 
 
 export default function GameSummary(props: {schedule: Game[]}){
@@ -23,8 +22,8 @@ export default function GameSummary(props: {schedule: Game[]}){
       return arr.findIndex(x => x === i);
     }
 
-    function getWinningUser(winningIndex: number, losingIndex: number): string[] {
-      let cells = data.cells;
+    function getWinningUser(boardIndex: number, winningIndex: number, losingIndex: number): string[] {
+      let cells = data.boards[boardIndex].cells;
       let winner = new Array<string>();
       try {
         // It's late... just trying to get tsc to accept my work
@@ -47,17 +46,19 @@ export default function GameSummary(props: {schedule: Game[]}){
           schedule.map((v, i) => {
             
             let winningIndex = 0, losingIndex = 0;
-            let winner = "";
+            let winners = new Array<string>();
             if (v.game.gameState !== 'pre' && v.game.gameState !== 'forfeit'){
-              if (parseInt(v.game.home.score) > parseInt(v.game.away.score)){
-                winningIndex = getIndexForScore(data.winnerNumbers, v.game.home.score);
-                losingIndex = getIndexForScore(data.loserNumbers, v.game.away.score);
-              } else {
-                winningIndex = getIndexForScore(data.winnerNumbers, v.game.away.score);
-                losingIndex = getIndexForScore(data.loserNumbers, v.game.home.score);
-              }
+              for (let boardIndex = 0; boardIndex < data.boards.length ; boardIndex++) {                
+                if (parseInt(v.game.home.score) > parseInt(v.game.away.score)){
+                  winningIndex = getIndexForScore(data.boards[boardIndex].winnerNumbers, v.game.home.score);
+                  losingIndex = getIndexForScore(data.boards[boardIndex].loserNumbers, v.game.away.score);
+                } else {
+                  winningIndex = getIndexForScore(data.boards[boardIndex].winnerNumbers, v.game.away.score);
+                  losingIndex = getIndexForScore(data.boards[boardIndex].loserNumbers, v.game.home.score);
+                }
 
-              winner = getWinningUser(winningIndex, losingIndex)[0];
+                winners.push(getWinningUser(boardIndex, winningIndex, losingIndex)[0]);
+              }
             }
 
             return (
@@ -84,7 +85,14 @@ export default function GameSummary(props: {schedule: Game[]}){
                         {v.game.gameState !== 'final' && v.game.gameState !== 'pre' && <Text>{v.game.currentPeriod} ({v.game.contestClock})</Text>}
                       </View>
                       <View>
-                          {v.game.gameState !== 'pre' && <Text>{winner} {v.game.gameState === 'final' ? ' x' : ""}</Text>}
+                          {v.game.gameState !== 'pre' && 
+                            winners.map((winner,i) => {
+                              return (
+                                <Text key={winner}>{winner} {v.game.gameState === 'final' ? ' x' : ""}</Text>
+
+                              )
+                            })
+                          }
                       </View>
                     </View>
                   </ListItem.Subtitle>
