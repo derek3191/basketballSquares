@@ -84,96 +84,15 @@ export default function GameSummary(props: {schedule: Game[]}){
                         {v.game.gameState !== 'final' && v.game.gameState !== 'pre' && <Text>{v.game.currentPeriod} ({v.game.contestClock})</Text>}
                       </View>
                       <View>
-                          {v.game.gameState !== 'pre' && <Text>{winner} {v.game.gameState === 'final' ? " x" : ""}</Text>}
-                          <Text>{winningIndex}, {losingIndex}</Text>
+                          {v.game.gameState !== 'pre' && <Text>{winner} {v.game.gameState === 'final' ? ' x' : ""}</Text>}
                       </View>
                     </View>
                   </ListItem.Subtitle>
                 </ListItem.Content>
-              </ListItem>
-              
+              </ListItem>              
             )
-
           })
         }
       </>
     )
-
-
-    // return(
-    //     <>
-    //     {schedule && schedule.length > 0 &&
-    //     schedule.map((v, i) => {
-    //       //confusing data type.. refactor.. later of course
-    //       let game = v.game;
-    //       console.log(v.game);
-
-    //       // let game = g.game;
-    //       let away = game.away;
-    //       let home = game.home;
-
-    //       let awayScoreFormatted = game.away.score.length > 0 ? game.away.score : "-";
-    //       let homeScoreFormatted = game.home.score.length > 0 ? game.home.score : "-";
-          
-    //       let winningIndex = 0, losingIndex = 0;
-    //       if (game.gameState !== "pre"){
-    //         if(parseInt(game.home.score) > parseInt(game.away.score)){
-    //           winningIndex = getIndexForScore(data.winnerNumbers, game.home.score);
-    //           losingIndex = getIndexForScore(data.loserNumbers, game.away.score);
-    //         } else {
-    //           winningIndex = getIndexForScore(data.winnerNumbers, game.away.score);
-    //           losingIndex = getIndexForScore(data.loserNumbers, game.home.score);
-    //         }
-    //       }
-
-    //       return (
-    //         <ListItem key={i} testID="gameListItem">
-    //           <ListItem.Content>
-    //             <ListItem.Title>{game.away.names.char6} @ {game.home.names.char6}</ListItem.Title>            
-    //             <ListItem.Subtitle>
-    //             <View>
-    //                 <View style={{flexDirection: 'row'}}>
-    //                     <Text>{game.startTime}</Text>
-    //                     <Text> on {game.network}</Text>
-    //                 </View>
-    //                 <View>
-    //                   <Text>{game.currentPeriod}</Text>
-    //                 </View>
-    //                 <View style={{flexDirection: 'row'}}>
-    //                     <View>
-    //                         <Text>{game.away.description}</Text>
-    //                         <Text>{game.away.score}</Text>
-    //                     </View>
-    //                     <View>
-    //                         <Text style={{textAlign: 'right'}}>{game.home.description}</Text>
-    //                         <Text style={{textAlign: 'right'}}>{game.home.score}</Text>
-                        
-    //                     </View>
-    //                 </View>
-    //                 <View>
-    //                   <Text>Derek</Text>
-    //                   {winningIndex && losingIndex && <Text>{winningIndex},{losingIndex}</Text>}
-    //                   {/* <Button 
-    //                     onPress={() => {
-    //                       gameSvc.getGameInfo(gameId)
-    //                         .then(result => {
-    //                           navigation.navigate("GameDetail", { gameInfo: result.data })
-    //                         })
-    //                         .catch(err => {
-    //                           console.log(err);
-    //                         })
-                      
-    //                     }
-    //                     }
-    //                     title="View"/> */}
-    //                 </View>
-    //             </View>
-    //             </ListItem.Subtitle>
-    //           </ListItem.Content>
-    //         </ListItem>
-    //       )
-    //     })
-    //   }
-    //     </>
-    // )
 }
