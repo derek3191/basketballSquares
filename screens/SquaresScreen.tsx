@@ -1,37 +1,74 @@
-import * as React from 'react';
+import React, {useState, useEffect} from 'react';
 
 import { Text, View, ScrollView, StyleSheet } from 'react-native';
+import { ButtonGroup } from 'react-native-elements';
 
 import data from '../constants/HardData.json';
+import { Board } from '../types/Board';
+
 
 export default function SquaresScreen() {
-
+    const [board, setBoard] = useState<Cell[] | null>(null);
+    const [buttonIndex, setButtonIndex] = useState<number>(0);
+    const buttons = ['Board 1', 'Board 2'];
+    
     function getNameForSquare(winningIndex: number, losingIndex: number): string[] {
-      let cells = data.cells;
-      let winner = new Array<string>();
-      try {
-        // It's late... just trying to get tsc to accept my work
-        let winningObj = cells.find(x =>
-          x.coordinates.winner === winningIndex && 
-          x.coordinates.loser === losingIndex);  
-        if (winningObj) {
-          winner = winningObj.names;
+    let winner = new Array<string>();
+      if (board) {
+        let cells = board.cells;
+        try {
+            // It's late... just trying to get tsc to accept my work
+            let winningObj = cells.find(x =>
+            x.coordinates.winner === winningIndex && 
+            x.coordinates.loser === losingIndex);  
+            if (winningObj) {
+            winner = winningObj.names;
+            }
+        } catch (error) {
+            return winner 
         }
-      } catch (error) {
-        return winner 
-      }
 
-      return winner;
+        return winner;
+      }
+        return winner;
     }
 
+    function getBoard(boardId: string | null) : Board {
+        if (boardId) {
+            let board = data.boards.find(x => x.boardId === boardId);
+            return board;
+        }
+        return data.boards[0];
+    }
+
+    useEffect(() => {
+        if (!board){
+            setBoard(getBoard());
+        } else if (board.boardId !== buttons[buttonIndex]) {
+            setBoard(getBoard(buttons[buttonIndex]));
+        }
+
+
+    }, [buttonIndex]);
+
+    
+    function handleClick(selectedIndex: number){
+        setButtonIndex(selectedIndex);
+    }
     return (
         <View>
+            <ButtonGroup 
+            onPress={setButtonIndex}
+            selectedIndex={buttonIndex}
+            buttons={buttons}
+            />
+            { board && 
             <ScrollView horizontal={true}>
                 <View>
                     <View style={{flexDirection: 'row'}}>
                         <View><Text style={styles.col}></Text></View>
                         {
-                            data.winnerNumbers.map((v, i) => {
+                            board.winnerNumbers.map((v, i) => {
                                 return(
                                     <View key={i}><Text style={styles.col}>{v}</Text></View>
                                 )    
@@ -39,7 +76,7 @@ export default function SquaresScreen() {
                         }
                     </View>
                     <View style={{flexDirection: 'row'}}>
-                        <View><Text style={styles.col}>{data.loserNumbers[0]}</Text></View>
+                        <View><Text style={styles.col}>{board.loserNumbers[0]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(0,0)[0]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(1,0)[0]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(2,0)[0]}</Text></View>
@@ -52,7 +89,7 @@ export default function SquaresScreen() {
                         <View><Text style={styles.col}>{getNameForSquare(9,0)[0]}</Text></View>
                     </View>
                     <View style={{flexDirection: 'row'}}>
-                        <View><Text style={styles.col}>{data.loserNumbers[1]}</Text></View>
+                        <View><Text style={styles.col}>{board.loserNumbers[1]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(0,1)[0]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(1,1)[0]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(2,1)[0]}</Text></View>
@@ -65,7 +102,7 @@ export default function SquaresScreen() {
                         <View><Text style={styles.col}>{getNameForSquare(9,1)[0]}</Text></View>
                     </View>
                     <View style={{flexDirection: 'row'}}>
-                        <View><Text style={styles.col}>{data.loserNumbers[2]}</Text></View>
+                        <View><Text style={styles.col}>{board.loserNumbers[2]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(0,2)[0]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(1,2)[0]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(2,2)[0]}</Text></View>
@@ -78,7 +115,7 @@ export default function SquaresScreen() {
                         <View><Text style={styles.col}>{getNameForSquare(9,2)[0]}</Text></View>
                     </View>
                     <View style={{flexDirection: 'row'}}>
-                        <View><Text style={styles.col}>{data.loserNumbers[3]}</Text></View>
+                        <View><Text style={styles.col}>{board.loserNumbers[3]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(0,3)[0]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(1,3)[0]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(2,3)[0]}</Text></View>
@@ -91,7 +128,7 @@ export default function SquaresScreen() {
                         <View><Text style={styles.col}>{getNameForSquare(9,3)[0]}</Text></View>
                     </View>
                     <View style={{flexDirection: 'row'}}>
-                        <View><Text style={styles.col}>{data.loserNumbers[4]}</Text></View>
+                        <View><Text style={styles.col}>{board.loserNumbers[4]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(0,4)[0]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(1,4)[0]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(2,4)[0]}</Text></View>
@@ -104,7 +141,7 @@ export default function SquaresScreen() {
                         <View><Text style={styles.col}>{getNameForSquare(9,4)[0]}</Text></View>
                     </View>
                     <View style={{flexDirection: 'row'}}>
-                        <View><Text style={styles.col}>{data.loserNumbers[5]}</Text></View>
+                        <View><Text style={styles.col}>{board.loserNumbers[5]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(0,5)[0]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(1,5)[0]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(2,5)[0]}</Text></View>
@@ -117,7 +154,7 @@ export default function SquaresScreen() {
                         <View><Text style={styles.col}>{getNameForSquare(9,5)[0]}</Text></View>
                     </View>
                     <View style={{flexDirection: 'row'}}>
-                        <View><Text style={styles.col}>{data.loserNumbers[6]}</Text></View>
+                        <View><Text style={styles.col}>{board.loserNumbers[6]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(0,6)[0]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(1,6)[0]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(2,6)[0]}</Text></View>
@@ -130,7 +167,7 @@ export default function SquaresScreen() {
                         <View><Text style={styles.col}>{getNameForSquare(9,6)[0]}</Text></View>
                     </View>
                     <View style={{flexDirection: 'row'}}>
-                        <View><Text style={styles.col}>{data.loserNumbers[7]}</Text></View>
+                        <View><Text style={styles.col}>{board.loserNumbers[7]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(0,7)[0]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(1,7)[0]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(2,7)[0]}</Text></View>
@@ -143,7 +180,7 @@ export default function SquaresScreen() {
                         <View><Text style={styles.col}>{getNameForSquare(9,7)[0]}</Text></View>
                     </View>
                     <View style={{flexDirection: 'row'}}>
-                        <View><Text style={styles.col}>{data.loserNumbers[8]}</Text></View>
+                        <View><Text style={styles.col}>{board.loserNumbers[8]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(0,8)[0]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(1,8)[0]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(2,8)[0]}</Text></View>
@@ -156,7 +193,7 @@ export default function SquaresScreen() {
                         <View><Text style={styles.col}>{getNameForSquare(9,8)[0]}</Text></View>
                     </View>
                     <View style={{flexDirection: 'row'}}>
-                        <View><Text style={styles.col}>{data.loserNumbers[9]}</Text></View>
+                        <View><Text style={styles.col}>{board.loserNumbers[9]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(0,9)[0]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(1,9)[0]}</Text></View>
                         <View><Text style={styles.col}>{getNameForSquare(2,9)[0]}</Text></View>
@@ -170,6 +207,7 @@ export default function SquaresScreen() {
                     </View>
                 </View>
             </ScrollView>
+            }
         </View>
     );
 }

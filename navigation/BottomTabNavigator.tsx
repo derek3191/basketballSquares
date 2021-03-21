@@ -70,7 +70,7 @@ function SquaresNavigator() {
         name="SquaresScreen"
         component={SquaresScreen}
         // options={{ headerShown: false }}
-        options={{ headerTitle: 'Squaresss' }}
+        options={{ headerTitle: 'Squares' }}
       />
     </SquaresStack.Navigator>
   );
