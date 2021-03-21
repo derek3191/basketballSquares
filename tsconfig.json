@@ -4,9 +4,13 @@
     "jsx": "react-native",
     "lib": ["dom", "esnext"],
     "moduleResolution": "node",
-    "noEmit": true,
+    // "noEmit": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    "strict": true
+    "strict": true,
+    // Ensure that .d.ts files are created by tsc, but not .js files
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "isolatedModules": true
   }
 }

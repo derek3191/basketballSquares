@@ -7,8 +7,7 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import ScoreboardScreen from '../screens/ScoreboardScreen';
 import SquaresScreen from '../screens/SquaresScreen';
-import GameDetailScreen from '../screens/GameDetailScreen';
-import { BottomTabParamList, ScoreboardParamList, SquaresParamList } from '../types';
+import { BottomTabParamList, ScoreboardParamList, SquaresParamList } from '../types/types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 

@@ -3,16 +3,17 @@ import React, {useState, useEffect} from 'react';
 import { AsyncStorage, Text, View, StyleSheet, ScrollView } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
-import Schedule from '../components/Schedule.tsx';
+import Schedule from '../components/Schedule';
 
-import GameService from '../services/gameService.ts';
+import GameService from '../services/gameService';
+import { Game } from '../types/Game';
 
 export default function ScoreboardScreen() {
   var gameSvc = new GameService();
 
-  const [gameDetail, setGameDetail] = useState(null);
-  const [date, setDate] = useState(new Date(Date.now()));
-  const [schedule, setSchedule] = useState(null);
+  // const [gameDetail, setGameDetail] = useState<any | null>(null);
+  const [date, setDate] = useState<Date>(new Date(Date.now()));
+  const [schedule, setSchedule] = useState<Game[] | null>(null);
 
   function onChange(event: any, selectedDate: any): void {
     const currentDate = selectedDate || date;
@@ -20,7 +21,7 @@ export default function ScoreboardScreen() {
     setSchedule(null);
   };
 
-  function formatDateString(d: date) : string {
+  function formatDateString(d: Date) : string {
   var year = d.getFullYear();
 
   var month = (1 + d.getMonth()).toString();
@@ -33,34 +34,40 @@ export default function ScoreboardScreen() {
 }
 
   useEffect(() => {
-    async function getGameInfo(id: string): any{
+    // const abortController = new AbortController();
+
+    async function getGameInfo(id: string): Promise<any>{
       return gameSvc.getGameInfo(id);
     }
 
-    async function getScheduleForDate(d: date): any {
+    async function getScheduleForDate(d: Date): Promise<any> {
       return gameSvc.getScheduleForDate(formatDateString(d));
     }
 
-    if (!gameDetail){
-      getGameInfo('5774514')
-        .then(result => {
-        setGameDetail(result.data);
-      })
-        .catch(err => {
-        console.log(err);
-        setGameDetail(null);
-      });
-    }
+    // if (!gameDetail){
+    //   getGameInfo('5774514')
+    //     .then((result: any) => {
+    //     setGameDetail(result.data);
+    //   })
+    //     .catch((error: Error) => {
+    //     console.log(error);
+    //     setGameDetail(null);
+    //   });
+    // }
 
     if (!schedule && date){
       getScheduleForDate(date)
-        .then(result => {
+        .then((result: any) => {
           setSchedule(result.data.games);
         })
-        .catch(err => {
-          console.log(err);
-          setSchedule(null);
+        .catch((error: Error) => {
+          console.log(error);
+          // setSchedule(null);
         });
+    }
+
+    return () => {
+
     }
   }, [date]);
 
@@ -77,7 +84,7 @@ export default function ScoreboardScreen() {
               />
           </View>
           <ScrollView>
-            {schedule && <Schedule games={schedule} />}
+            {schedule && <Schedule schedule={schedule} />}
           </ScrollView>
         </View>
     );

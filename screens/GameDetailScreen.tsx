@@ -1,12 +1,11 @@
 import * as React from 'react';
 
-import { Text, View} from 'react-native';
-import GameDetail from '../components/GameDetail';
+import { Text as DefaultText, View as DefaultView } from 'react-native';
 
 export default function GameDetailScreen() {
     return (
-        <View>
-            <GameDetail gameInfo="5774514" />
-        </View>
+        <DefaultView>
+            <DefaultText>Game Details</DefaultText>
+        </DefaultView>
     );
 }
