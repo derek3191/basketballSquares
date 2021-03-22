@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, StyleSheet, View } from 'react-native';
-import { Text, ListItem } from 'react-native-elements';
+import { Text, Divider, ListItem } from 'react-native-elements';
+import { SvgUri, Text as SvgText } from 'react-native-svg';
 
 import { useNavigation } from '@react-navigation/native';
 import GameService from '../services/gameService';
@@ -62,28 +63,71 @@ export default function GameSummary(props: {schedule: Game[]}){
             }
 
             return (
+              <>
               <ListItem key={i} testID="gameListItem">
                 <ListItem.Content>
-                  <ListItem.Title>{v.game.away.names.char6} @ {v.game.home.names.char6}</ListItem.Title>
+                  {/* <ListItem.Title>
+                    <View>
+                      {/* <Avatar 
+                        rounded
+                        source={{
+                          uri: `https://i.turner.ncaa.com/sites/default/files/images/logos/schools/bgl/texas-tech.svg`
+                        }}
+                      />
+                      
+                      <Avatar 
+                        rounded
+                        source={{
+                          uri: `https://i.turner.ncaa.com/sites/default/files/images/logos/schools/bgl/texas-tech.svg`
+                        }}
+                      />
+                      <SvgUri
+                      width="25%"
+                      height="25%"                   
+                      uri={`https://i.turner.ncaa.com/sites/default/files/images/logos/schools/bgl/${v.game.away.names.seo}.svg`}
+                        
+                      />
+                      <Text>{v.game.home.names.char6}</Text>
+                      {/* {v.game.away.names.char6} @ {v.game.home.names.char6} 
+                    
+                    </View>
+                  </ListItem.Title> */}
                   <ListItem.Subtitle>
                     <View>
-                      <View style={{flexDirection: 'row'}}>
-                        <View>
-                          <Text>{v.game.away.description}</Text>
-                          {v.game.gameState !== 'pre' && <Text>{v.game.away.score}</Text>}
-                        </View>
-                        <View>
-                          <Text style={{textAlign: 'right'}}>{v.game.home.description}</Text>
-                          {v.game.gameState !== 'pre' && <Text style={{textAlign: 'right'}}>{v.game.home.score}</Text>}
-                        </View>
-                      </View>
+                    <View style={{flexDirection: 'row', paddingBottom: 10}}>
+                      <SvgUri
+                        width="15%"
+                        height="100%"                   
+                        uri={`https://i.turner.ncaa.com/sites/default/files/images/logos/schools/bgl/${v.game.away.names.seo}.svg`}
+                          
+                        />
+                      <Text>{v.game.away.names.short}</Text>
+                      <Text style={{textAlign: 'right'}}> {v.game.away.description}</Text>
+                      {v.game.gameState !== 'pre' && <Text style={{textAlign: 'right'}}> {v.game.away.score}</Text>}
+                      
+                    </View>
+                    <View style={{flexDirection: 'row', paddingBottom: 10}}>
+                      <SvgUri
+                        width="15%"
+                        height="100%"                   
+                        uri={`https://i.turner.ncaa.com/sites/default/files/images/logos/schools/bgl/${v.game.home.names.seo}.svg`}
+                          
+                        />
+                      <Text>{v.game.home.names.short}</Text>
+                      <Text style={{textAlign: 'right'}}> {v.game.home.description}</Text>
+                      {v.game.gameState !== 'pre' && <Text style={{textAlign: 'right'}}> {v.game.home.score}</Text>}
+                      
+                      
+                    </View>
                       <View style={{flexDirection: 'row'}}>
                         {v.game.gameState === 'pre' && <Text>{v.game.startTime}</Text>}
+                        {v.game.gameState === 'live' && <Text>Live</Text>}
                         {v.game.network.length > 0 && v.game.gameState !== 'final' && <Text> on {v.game.network}</Text>}
                       </View>
                       <View>
-                        {v.game.gameState !== 'final' && v.game.gameState !== 'pre' && <Text>{v.game.currentPeriod} ({v.game.contestClock})</Text>}
+                        {v.game.gameState !== 'final' && v.game.gameState !== 'pre' && <Text style={{color: 'green'}}>{v.game.currentPeriod} ({v.game.contestClock})</Text>}
                       </View>
+                      {v.game.gameState !== 'pre' && <Text style={{fontSize: 20}}>{v.game.gameState !== 'final' ? "Winning" : "Winners"}</Text>}
                       <View>
                           {v.game.gameState !== 'pre' && 
                             winners.map((winner,i) => {
@@ -97,7 +141,9 @@ export default function GameSummary(props: {schedule: Game[]}){
                     </View>
                   </ListItem.Subtitle>
                 </ListItem.Content>
-              </ListItem>              
+              </ListItem>
+              <Divider  />  
+              </>            
             )
           })
         }
