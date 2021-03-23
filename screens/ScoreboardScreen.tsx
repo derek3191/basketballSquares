@@ -34,8 +34,6 @@ export default function ScoreboardScreen() {
 }
 
   useEffect(() => {
-    // const abortController = new AbortController();
-
     async function getGameInfo(id: string): Promise<any>{
       return gameSvc.getGameInfo(id);
     }
@@ -43,17 +41,6 @@ export default function ScoreboardScreen() {
     async function getScheduleForDate(d: Date): Promise<any> {
       return gameSvc.getScheduleForDate(formatDateString(d));
     }
-
-    // if (!gameDetail){
-    //   getGameInfo('5774514')
-    //     .then((result: any) => {
-    //     setGameDetail(result.data);
-    //   })
-    //     .catch((error: Error) => {
-    //     console.log(error);
-    //     setGameDetail(null);
-    //   });
-    // }
 
     if (!schedule && date){
       getScheduleForDate(date)

@@ -5,6 +5,7 @@ import { SvgUri, Text as SvgText } from 'react-native-svg';
 
 import { useNavigation } from '@react-navigation/native';
 import GameService from '../services/gameService';
+import { MaterialIcons } from '@expo/vector-icons';
 
 import data from '../constants/HardData.json';
 import { Game, Team } from '../types/Game';
@@ -104,7 +105,8 @@ export default function GameSummary(props: {schedule: Game[]}){
                       <Text>{v.game.away.names.short}</Text>
                       <Text style={{textAlign: 'right'}}> {v.game.away.description}</Text>
                       {v.game.gameState !== 'pre' && <Text style={{textAlign: 'right'}}> {v.game.away.score}</Text>}
-                      
+                      {v.game.away.winner && <MaterialIcons name="sports-basketball" size={20} color="#eb6607" />}
+
                     </View>
                     <View style={{flexDirection: 'row', paddingBottom: 10}}>
                       <SvgUri
@@ -115,8 +117,8 @@ export default function GameSummary(props: {schedule: Game[]}){
                         />
                       <Text>{v.game.home.names.short}</Text>
                       <Text style={{textAlign: 'right'}}> {v.game.home.description}</Text>
-                      {v.game.gameState !== 'pre' && <Text style={{textAlign: 'right'}}> {v.game.home.score}</Text>}
-                      
+                      {v.game.gameState !== 'pre' && <Text style={{textAlign: 'right'}}> {v.game.home.score} </Text>}
+                      {v.game.home.winner && <MaterialIcons name="sports-basketball" size={20} color="#eb6607" />}
                       
                     </View>
                       <View style={{flexDirection: 'row'}}>
@@ -132,8 +134,10 @@ export default function GameSummary(props: {schedule: Game[]}){
                           {v.game.gameState !== 'pre' && 
                             winners.map((winner,i) => {
                               return (
-                                <Text key={winner}>{winner} {v.game.gameState === 'final' ? ' x' : ""}</Text>
-
+                                <View style={{flexDirection: 'row'}}>
+                                  <Text key={winner}>{winner}</Text>
+                                  { v.game.gameState === 'final' && <MaterialIcons name="check" size={24} color="green" /> }
+                                </View>
                               )
                             })
                           }

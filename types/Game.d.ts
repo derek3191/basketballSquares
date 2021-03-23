@@ -41,5 +41,10 @@ export interface Game {
         videoState: string;
         bracketRegion: string;
         contestClock: string;
+        boardWin: [
+            {
+                boardId: string;
+            }
+        ];
     };
 }

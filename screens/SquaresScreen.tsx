@@ -4,7 +4,7 @@ import { Text, View, ScrollView, StyleSheet } from 'react-native';
 import { ButtonGroup } from 'react-native-elements';
 
 import data from '../constants/HardData.json';
-import { Board } from '../types/Board';
+import { Board, User } from '../types/Board';
 
 
 export default function SquaresScreen() {
@@ -38,6 +38,20 @@ export default function SquaresScreen() {
         return board;
     }
 
+    function getLeaderboard(board: Board) : string[] {
+        let rank = new Array<string>();
+        let user: string;
+
+        // rank = board.cells.map(cell => {
+        board.cells.forEach(cell => {
+            rank.push(...cell.names);
+        });
+
+        rank = rank.filter((v, i, a) => a.indexOf(v) === i)
+        rank.sort();
+        return rank;
+    }
+
     useEffect(() => {
         if (!board){
             setBoard(getBoard());
@@ -53,7 +67,7 @@ export default function SquaresScreen() {
         setButtonIndex(selectedIndex);
     }
     return (
-        <View>
+        <ScrollView>
             <ButtonGroup 
             onPress={setButtonIndex}
             selectedIndex={buttonIndex}
@@ -205,7 +219,15 @@ export default function SquaresScreen() {
                 </View>
             </ScrollView>
             }
-        </View>
+            {
+                board &&     
+                getLeaderboard(board).map((v, i) => {
+                    return (
+                        <Text key={`${v}_${i}`}>{v}</Text>
+                    )
+                })
+            }
+        </ScrollView>
     );
 }
 
